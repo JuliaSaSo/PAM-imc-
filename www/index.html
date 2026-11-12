@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <title>Calculadora de IMC</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+  <style>
+    body {
+      background: linear-gradient(160deg, #e9d5ff, #a78bfa);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 400px;
+    }
+
+    .card {
+      border: none;
+      border-radius: 22px;
+      background: #f5f0ff;
+    }
+
+    h1 {
+      color: #5b21b6;
+      font-weight: bold;
+    }
+
+    label {
+      color: #6d28d9;
+      font-weight: 600;
+    }
+
+    .form-control {
+      border: 2px solid #c4b5fd;
+      border-radius: 12px;
+    }
+
+    .form-control:focus {
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 0.2rem rgba(124, 58, 237, 0.25);
+    }
+
+    .btn-roxo {
+      background: #7c3aed;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    .btn-roxo:hover {
+      background: #6d28d9;
+      color: white;
+    }
+
+    .btn-claro {
+      background: #ddd6fe;
+      color: #5b21b6;
+      border: none;
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    .btn-claro:hover {
+      background: #c4b5fd;
+      color: #5b21b6;
+    }
+
+    #resultado {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 14px;
+      text-align: center;
+      background: #ddd6fe;
+      color: #4c1d95;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card shadow">
+      <div class="card-body p-4">
+        <h1 class="h3 text-center mb-4">Calculadora de IMC</h1>
+
+        <div class="mb-3">
+          <label for="peso" class="form-label">Peso (kg)</label>
+          <input type="text" inputmode="decimal" id="peso" class="form-control">
+        </div>
+
+        <div class="mb-3">
+          <label for="altura" class="form-label">Altura (cm)</label>
+          <input type="text" inputmode="decimal" id="altura" class="form-control">
+        </div>
+
+        <div class="d-grid gap-2">
+          <button type="button" class="btn btn-roxo" onclick="calcular()">Calcular</button>
+          <button type="button" class="btn btn-claro" onclick="limpar()">Limpar</button>
+        </div>
+
+        <div id="resultado"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // troca a vírgula por ponto pra aceitar os dois jeitos
+    function lerNumero(texto) {
+      return parseFloat(texto.replace(",", "."));
+    }
+
+    function classificar(imc) {
+      if (imc < 18.5) return "Abaixo do peso";
+      if (imc < 25) return "Peso normal";
+      if (imc < 30) return "Sobrepeso";
+      if (imc < 35) return "Obesidade grau I";
+      if (imc < 40) return "Obesidade grau II";
+      return "Obesidade grau III";
+    }
+
+    function calcular() {
+      var peso = lerNumero(document.getElementById("peso").value);
+      var alturaCm = lerNumero(document.getElementById("altura").value);
+      var caixa = document.getElementById("resultado");
+
+      caixa.style.display = "block";
+
+      if (isNaN(peso) || isNaN(alturaCm) || peso <= 0 || alturaCm <= 0) {
+        caixa.innerHTML = "Preencha o peso e a altura direitinho!";
+        return;
+      }
+
+      var alturaM = alturaCm / 100;
+      var imc = peso / (alturaM * alturaM);
+
+      caixa.innerHTML = "<strong>Seu IMC: " + imc.toFixed(1) + "</strong><br>" + classificar(imc);
+    }
+
+    function limpar() {
+      document.getElementById("peso").value = "";
+      document.getElementById("altura").value = "";
+      document.getElementById("resultado").style.display = "none";
+    }
+  </script>
+</body>
+</html>

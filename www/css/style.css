@@ -1,0 +1,21 @@
+body {
+  background: #eef2f7;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  max-width: 420px;
+}
+
+.card {
+  border-radius: 16px;
+  border: none;
+}
+
+#resultado {
+  text-align: center;
+  font-size: 1.1rem;
+}
+
